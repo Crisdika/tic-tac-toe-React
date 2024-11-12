@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-
+import { Button, Typography, Box, Container } from '@mui/material';
 
 // Componentizado
 // Sempre começar uma função com Letra maiscula caso for um componente
@@ -26,12 +26,21 @@ function calculateWinner(squares) {
 }
 
 function Square({value, onSquareClick}) {
-  return (<button 
-            className='square' 
-            onClick={onSquareClick}
-          >
-          {value}
-          </button>);
+  return (
+    <Button 
+      className='square'
+      variant='conteined'
+      onClick={onSquareClick}
+      sx={{
+        width: '60px',
+        height: '60px',
+        margin: '4px',
+        backgroundColor: '#1976d2'
+      }}
+    >
+      {value}
+    </Button>
+  );
 }
 
 function App() {
@@ -42,9 +51,7 @@ function App() {
   const winner = calculateWinner(squares);
   let statusGame;
 
-
   function handleClick(i){
-
     if(squares[i] || calculateWinner(squares)){
       return; 
     }
@@ -57,40 +64,49 @@ function App() {
       nextSquares[i] = "O";
     }
 
-      setxIsNext(!xIsNext);
-      setSquares(nextSquares);
+    setxIsNext(!xIsNext);
+    setSquares(nextSquares);
   }
 
-
   if(winner){ 
-    statusGame = 'Winner: ' + winner
-   } else { 
-     statusGame = "Next player: " + (xIsNext ? "X" : "O")
-   }
+    statusGame = 'Vencedor: ' + winner
+  } else { 
+    statusGame = "Próximo jogador: " + (xIsNext ? "X" : "O")
+  }
 
   return (
-    <>
-    <div className='grid-game'>
-      <div className='status'>
-        {statusGame}
-      </div>
-      <div className='board-row'>
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className='board-row'>
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className='board-row'>
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
-    </div>
-    </>
+    <Container maxWidth="sm">
+      <Box 
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mt: 4
+        }}
+      >
+        <Typography variant="h4" sx={{ mb: 2, color: '#fff' }}>
+          {statusGame}
+        </Typography>
+        
+        <Box>
+          <Box sx={{ display: 'flex' }}>
+            <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+            <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+            <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+            <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+            <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+            <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+            <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+          </Box>
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
